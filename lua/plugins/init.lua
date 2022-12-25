@@ -11,7 +11,7 @@ end
 
 local packer_bootstrap = ensure_packer()
 
-local lsp_ft = {'sh', 'zsh', 'bash', 'c', 'cpp', 'cmake', 'html', 'lua','markdown', 'racket', 'rs', 'vim', 'tex'}
+local lsp_ft = {'sh', 'zsh', 'bash', 'c', 'cpp', 'cmake', 'html', 'lua','markdown', 'racket', 'rust', 'vim', 'tex', "toml"}
 local on_file_open_events = { "BufRead", "BufWinEnter", "BufNewFile" }
 
 return require('packer').startup(function(use)
@@ -40,9 +40,11 @@ return require('packer').startup(function(use)
   }
 
   -- theme
-  use { 
-    'dracula/vim', as = 'dracula',
-    config = function() vim.cmd[[colorscheme dracula]] end,
+  use {
+    'folke/tokyonight.nvim',
+    config = function()
+        pcall(vim.cmd[[colorscheme tokyonight-storm]])
+    end,
   }
 
   -- ui plugins
@@ -55,15 +57,9 @@ return require('packer').startup(function(use)
   use 'rcarriga/nvim-notify'
 
   use {
-    'romgrk/barbar.nvim',
-    wants = "nvim-web-devicons",
-    event = {"BufAdd", "tabnew"},
-  }
-
-  use {
-    'nvim-lualine/lualine.nvim',
+    'feline-nvim/feline.nvim',
     event = on_file_open_events,
-    config = function() require "plugins.lualine" end,
+    config = function() require "plugins.feline" end,
   }
 
   use {
@@ -89,14 +85,15 @@ return require('packer').startup(function(use)
     -- requires = { 'williamboman/mason-lspconfig.nvim' },
     config = function() require "plugins.mason" end,
   }
-  
+
   -- snippets
   use {
     'rafamadriz/friendly-snippets',
     module = { "cmp", "cmp_nvim_lsp" },
     event = 'InsertEnter',
   }
-   -- completion
+
+  -- completion
   use {
     'hrsh7th/nvim-cmp',
     after = "friendly-snippets",
@@ -141,14 +138,6 @@ return require('packer').startup(function(use)
     event = on_file_open_events,
     config = function() require "plugins.autopairs" end,
   }
-
-
-  -- Lazy loading:
-  -- Load on specific commands
-  -- use {'tpope/vim-dispatch', opt = true, cmd = {'Dispatch', 'Make', 'Focus', 'Start'}}
-
-  -- Load on an autocommand event
-  -- use {'andymass/vim-matchup', event = 'VimEnter'}
 
   use {
     'dstein64/vim-startuptime',
