@@ -8,6 +8,11 @@ local ensure_installed = {
 require('mason').setup {
   ensure_installed = ensure_installed, -- not an option from mason.nvim
 
+  providers = {
+    "mason.providers.client",
+    "mason.providers.registry-api",
+  },
+
   PATH = "prepend",
 
   ui = {
@@ -35,4 +40,3 @@ require('mason').setup {
 vim.api.nvim_create_user_command("MasonInstallAll", function()
   vim.cmd("MasonInstall " .. table.concat(ensure_installed, " "))
 end, {})
-

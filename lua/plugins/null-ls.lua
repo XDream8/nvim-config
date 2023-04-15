@@ -21,9 +21,9 @@ local sources = {
    b.formatting.stylua,
 
    -- Shell
+   b.formatting.beautysh,
    b.formatting.shfmt,
    -- b.formatting.shellharden,
-   b.formatting.beautysh,
    b.diagnostics.shellcheck.with { diagnostics_format = "#{m} [#{c}]" },
 
    -- rust
